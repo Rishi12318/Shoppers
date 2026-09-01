@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import Link from "next/link";
 
 const videos = [
   "https://v1.pinimg.com/videos/mc/720p/15/9b/c8/159bc891431a046ca81f68e57527d41c.mp4",
@@ -86,6 +87,14 @@ export default function HeroSection() {
           >
             Select fabrics • Choose master tailors • Custom suits & sarees delivered
           </p>
+
+          <Link
+            href="/auth"
+            className="pointer-events-auto mt-10 inline-block rounded-full bg-gradient-to-r from-[#d4a574] to-[#b8956a] px-10 py-3 text-sm font-medium tracking-widest text-[#1a0f0a] uppercase transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#d4a574]/25"
+            style={{ fontFamily: "'Jost', sans-serif" }}
+          >
+            Get Started
+          </Link>
         </div>
       </div>
     </div>

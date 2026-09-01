@@ -6,17 +6,17 @@ const slides = [
   {
     template: "https://i.pinimg.com/736x/58/39/19/583919eb72f317c39d1aee9546ab84c8.jpg",
     images: [
-      { src: "https://i.pinimg.com/736x/f2/bf/67/f2bf677392896370007c54e4590e3fee.jpg", alt: "Style 1", className: "absolute top-[8%] left-[8%] h-[40%] w-[40%] rounded-lg object-cover shadow-lg" },
-      { src: "https://i.pinimg.com/736x/92/da/f3/92daf33d54e400a1ae69e163159d97f0.jpg", alt: "Style 2", className: "absolute top-[8%] right-[8%] h-[40%] w-[40%] rounded-lg object-cover shadow-lg" },
-      { src: "https://i.pinimg.com/736x/2a/51/69/2a51693b62d85882e8e0ed0f520023e8.jpg", alt: "Style 3", className: "absolute bottom-[8%] left-[20%] h-[40%] w-[55%] rounded-lg object-cover shadow-lg" },
+      { src: "https://i.pinimg.com/736x/f2/bf/67/f2bf677392896370007c54e4590e3fee.jpg", alt: "Style 1", className: "absolute top-[8%] left-[8%] h-[40%] w-[40%] rounded-lg object-cover shadow-lg bg-[#2c1a12]" },
+      { src: "https://i.pinimg.com/736x/92/da/f3/92daf33d54e400a1ae69e163159d97f0.jpg", alt: "Style 2", className: "absolute top-[8%] right-[8%] h-[40%] w-[40%] rounded-lg object-cover shadow-lg bg-[#2c1a12]" },
+      { src: "https://i.pinimg.com/736x/2a/51/69/2a51693b62d85882e8e0ed0f520023e8.jpg", alt: "Style 3", className: "absolute bottom-[8%] left-[20%] h-[40%] w-[55%] rounded-lg object-cover shadow-lg bg-[#2c1a12]" },
     ],
   },
   {
     template: "https://i.pinimg.com/736x/a0/42/e9/a042e96d214e2e46dc175f28e60f1aa3.jpg",
     images: [
-      { src: "https://i.pinimg.com/736x/45/3b/1d/453b1de576a963c08ecab1a1dac73680.jpg", alt: "Style 4", className: "absolute top-[8%] left-[8%] h-[40%] w-[40%] rounded-lg object-cover shadow-lg" },
-      { src: "https://i.pinimg.com/736x/fa/92/80/fa9280ab9714371e9cce53390473a66a.jpg", alt: "Style 5", className: "absolute top-[8%] right-[8%] h-[40%] w-[40%] rounded-lg object-cover shadow-lg" },
-      { src: "https://i.pinimg.com/736x/f6/1e/c6/f61ec6aeb0eadf55bd4d47a355996b9a.jpg", alt: "Style 6", className: "absolute bottom-[8%] left-[20%] h-[40%] w-[55%] rounded-lg object-cover shadow-lg" },
+      { src: "https://i.pinimg.com/736x/45/3b/1d/453b1de576a963c08ecab1a1dac73680.jpg", alt: "Style 4", className: "absolute top-[8%] left-[8%] h-[40%] w-[40%] rounded-lg object-cover shadow-lg bg-[#2c1a12]" },
+      { src: "https://i.pinimg.com/736x/fa/92/80/fa9280ab9714371e9cce53390473a66a.jpg", alt: "Style 5", className: "absolute top-[8%] right-[8%] h-[40%] w-[40%] rounded-lg object-cover shadow-lg bg-[#2c1a12]" },
+      { src: "https://i.pinimg.com/736x/f6/1e/c6/f61ec6aeb0eadf55bd4d47a355996b9a.jpg", alt: "Style 6", className: "absolute bottom-[8%] left-[20%] h-[40%] w-[55%] rounded-lg object-cover shadow-lg bg-[#2c1a12]" },
     ],
   },
 ];
