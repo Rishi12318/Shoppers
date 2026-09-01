@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function AuthPage() {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const router = useRouter();
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#f8f5f1] px-4 py-12">
@@ -66,7 +68,7 @@ export default function AuthPage() {
           </div>
 
           {/* Form */}
-          <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); router.push("/shop"); }}>
             {mode === "signup" && (
               <div>
                 <label className="mb-1.5 block text-xs font-light tracking-widest text-[#7b6a59] uppercase" style={{ fontFamily: "'Jost', sans-serif" }}>
