@@ -13,6 +13,11 @@ const states = [
 ];
 
 const CDN = "https://cdn.shopify.com/s/files/1/0820/2987/1316/files";
+const VIDEO_BASE = "https://astrea-venus.myshopify.com/cdn/shop/videos";
+const HERO_VIDEO = `${VIDEO_BASE}/c/vp/98deb5efebaf431cb7190f79db01c87d/98deb5efebaf431cb7190f79db01c87d.HD-1080p-2.5Mbps-77913184.mp4?v=0`;
+const HERO_VIDEO_POSTER = `${CDN}/preview_images/98deb5efebaf431cb7190f79db01c87d.thumbnail.0000000000_small.jpg`;
+const WHYUS_VIDEO = `${VIDEO_BASE}/c/vp/813b18076c654b6696dec97bba622274/813b18076c654b6696dec97bba622274.HD-1080p-2.5Mbps-77971130.mp4?v=0`;
+const WHYUS_VIDEO_POSTER = `${CDN}/preview_images/813b18076c654b6696dec97bba622274.thumbnail.0000000000_small.jpg`;
 
 const collections = [
   { name: "Summer Collection", link: "#summer" },
@@ -114,8 +119,18 @@ export default function ShopPage() {
       </section>
 
       {/* Hero - The Amritsari's */}
-      <section className="relative flex h-[70vh] min-h-[400px] items-center justify-center overflow-hidden bg-[#2c1a12]">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2c1a12]/80 via-[#2c1a12]/40 to-[#2c1a12]/80" />
+      <section className="relative flex h-[70vh] min-h-[400px] items-center justify-center overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster={HERO_VIDEO_POSTER}
+          className="absolute inset-0 h-full w-full object-cover"
+        >
+          <source src={HERO_VIDEO} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2c1a12]/70 via-[#2c1a12]/30 to-[#2c1a12]/70" />
         <div className="relative z-10 text-center px-4">
           <h1
             className="text-5xl font-light italic text-white sm:text-7xl lg:text-8xl"
@@ -141,8 +156,13 @@ export default function ShopPage() {
       </section>
 
       {/* Collections */}
-      <section className="bg-[#fbf9f6] px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
+      <section className="relative overflow-hidden bg-[#fbf9f6] px-4 py-16 sm:px-6 lg:px-8">
+        <img
+          src={`${CDN}/download_25.jpg`}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover opacity-10"
+        />
+        <div className="relative z-10 mx-auto max-w-7xl">
           <h2
             className="mb-2 text-3xl font-light italic text-[#2c1a12] sm:text-4xl"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
@@ -156,7 +176,7 @@ export default function ShopPage() {
               <a
                 key={col.name}
                 href={col.link}
-                className="group relative overflow-hidden rounded-2xl border border-[#d9cdbf] bg-white p-6 transition-all duration-300 hover:shadow-lg hover:border-[#d4a574]"
+                className="group relative overflow-hidden rounded-2xl border border-[#d9cdbf] bg-white/80 backdrop-blur-sm p-6 transition-all duration-300 hover:shadow-lg hover:border-[#d4a574]"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#2c1a12]/5 to-[#2c1a12]/0 transition-opacity group-hover:from-[#2c1a12]/10" />
                 <span
@@ -291,10 +311,21 @@ export default function ShopPage() {
       </section>
 
       {/* Why Us */}
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl text-center">
+      <section className="relative overflow-hidden px-4 py-16 sm:px-6 lg:px-8">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster={WHYUS_VIDEO_POSTER}
+          className="absolute inset-0 h-full w-full object-cover"
+        >
+          <source src={WHYUS_VIDEO} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-[#2c1a12]/60" />
+        <div className="relative z-10 mx-auto max-w-7xl text-center">
           <h2
-            className="mb-2 text-3xl font-light italic text-[#2c1a12] sm:text-4xl"
+            className="mb-2 text-3xl font-light italic text-white sm:text-4xl"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
             Why <span className="font-semibold text-[#d4a574]">Us</span>
@@ -305,21 +336,21 @@ export default function ShopPage() {
             {whyUs.map((item, i) => (
               <div
                 key={i}
-                className="rounded-2xl border border-[#d9cdbf] bg-white p-8 transition-all duration-300 hover:shadow-lg hover:border-[#d4a574]"
+                className="rounded-2xl border border-white/20 bg-white/10 p-8 backdrop-blur-sm transition-all duration-300 hover:bg-white/20 hover:border-[#d4a574]"
               >
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#2c1a12] text-[#d4a574]">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#d4a574] text-[#1a0f0a]">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <h3
-                  className="text-lg font-medium text-[#2c1a12]"
+                  className="text-lg font-medium text-white"
                   style={{ fontFamily: "'Jost', sans-serif" }}
                 >
                   {item.heading}
                 </h3>
                 <p
-                  className="mt-2 text-sm font-light leading-relaxed text-[#7b6a59]"
+                  className="mt-2 text-sm font-light leading-relaxed text-white/80"
                   style={{ fontFamily: "'Jost', sans-serif" }}
                 >
                   {item.desc}
