@@ -22,21 +22,21 @@ const collections = [
 ];
 
 const featuredProducts = [
-  { title: "Premium Punjabi Suits", desc: "Authentic designs from Amritsar, crafted with love and tradition", cta: "Shop Suits", img: `${CDN}/download_18_variant.jpg` },
-  { title: "Punjabi Jutti", desc: "Handcrafted jutti to complete your traditional look", cta: "Shop Jutti", img: `${CDN}/Twirl_groove_juttis.jpg` },
+  { title: "Premium Punjabi Suits", desc: "Authentic designs from Amritsar, crafted with love and tradition", cta: "Shop Suits", img: `${CDN}/download_18_3000a9c5-df7f-4b11-98cb-17db74195785.jpg` },
+  { title: "Punjabi Jutti", desc: "Handcrafted jutti to complete your traditional look", cta: "Shop Jutti", img: `${CDN}/Twirl_groove_repeat_your_handcrafted_juttis_are_Navratri-ready_____DFRForAll___dfr_navratrifits_juttisfornavratri_womenjuttis_handcraftedfootwear_mojaris_customised_desi_juttis_kolhap.jpg` },
   { title: "Exquisite Phulkari Chunni", desc: "Vibrant embroidered chunnis showcasing Punjab's rich heritage", cta: "Shop Phulkari", img: `${CDN}/Phulkari.jpg` },
-  { title: "Everything from Amritsar", desc: "Your one-stop destination for authentic Punjabi fashion", cta: "Explore All", img: `${CDN}/download_19_variant.jpg` },
+  { title: "Everything from Amritsar", desc: "Your one-stop destination for authentic Punjabi fashion", cta: "Explore All", img: `${CDN}/download_19_6dabf79c-8ac3-482c-bac2-f06fe6e96df7.jpg` },
 ];
 
 const productGrid = [
   { title: "Phulkari Dupatta", price: "₹1,299", img: `${CDN}/Phulkari.jpg` },
-  { title: "Punjabi Jutti Pair", price: "₹899", img: `${CDN}/Twirl_groove_juttis.jpg` },
-  { title: "Anarkali Suit Set", price: "₹2,499", img: `${CDN}/Royal_Yellow_Festive_Suit.jpg` },
+  { title: "Punjabi Jutti Pair", price: "₹899", img: `${CDN}/Twirl_groove_repeat_your_handcrafted_juttis_are_Navratri-ready_____DFRForAll___dfr_navratrifits_juttisfornavratri_womenjuttis_handcraftedfootwear_mojaris_customised_desi_juttis_kolhap.jpg` },
+  { title: "Anarkali Suit Set", price: "₹2,499", img: `${CDN}/Royal_Yellow_Festive_Suit_Set___Elegant_Ethnic_Wedding_Outfit.jpg` },
   { title: "Parandi Set", price: "₹599", img: `${CDN}/Punjabi_Bride_Parandi.jpg` },
-  { title: "Chikankari Kurta", price: "₹1,799", img: `${CDN}/Burgundy_Georgette_Sharara.jpg` },
-  { title: "Sharara Suit", price: "₹2,199", img: `${CDN}/Pyoor_Farshi_Salwar.jpg` },
-  { title: "Patiala Salwar Set", price: "₹1,599", img: `${CDN}/New_look_bride.jpg` },
-  { title: "Bridal Lehenga", price: "₹4,999", img: `${CDN}/download_18_variant.jpg` },
+  { title: "Chikankari Kurta", price: "₹1,799", img: `${CDN}/Burgundy_Georgette_Sharara_Suit__Pakistani_Indian_Ethnic_Wear_-_Etsy.jpg` },
+  { title: "Sharara Suit", price: "₹2,199", img: `${CDN}/Pyoor_Farshi_Salwar_Suits__Make_a_Statement_This.jpg` },
+  { title: "Patiala Salwar Set", price: "₹1,599", img: `${CDN}/New_look_bride_back_to_old_fashion.jpg` },
+  { title: "Bridal Lehenga", price: "₹4,999", img: `${CDN}/download_18_3000a9c5-df7f-4b11-98cb-17db74195785.jpg` },
 ];
 
 const whyUs = [
