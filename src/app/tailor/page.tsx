@@ -9,6 +9,16 @@ interface Message {
   content: string;
 }
 
+const BODY_TYPES = ["Slim", "Average", "Athletic", "Muscular", "Plus-size", "Petite"];
+const GENDER_OPTIONS = ["Male", "Female", "Other"];
+
+function getQuickReplies(lastMessage: string): string[] | null {
+  const lower = lastMessage.toLowerCase();
+  if (lower.includes("gender")) return GENDER_OPTIONS;
+  if (lower.includes("body type")) return BODY_TYPES;
+  return null;
+}
+
 function TailorChat() {
   const searchParams = useSearchParams();
   const product = searchParams.get("product") || "Punjabi Suit";
@@ -48,10 +58,10 @@ function TailorChat() {
     greetUser();
   }, [product, initialized]);
 
-  const sendMessage = async () => {
-    if (!input.trim() || loading) return;
+  const processInput = async (text: string) => {
+    if (!text.trim() || loading) return;
 
-    const userMessage: Message = { role: "user", content: input.trim() };
+    const userMessage: Message = { role: "user", content: text.trim() };
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
     setInput("");
@@ -88,6 +98,10 @@ function TailorChat() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const sendMessage = () => {
+    processInput(input);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -222,6 +236,30 @@ function TailorChat() {
           <div ref={messagesEndRef} />
         </div>
       </div>
+
+      {/* Quick Replies */}
+      {!loading && messages.length > 0 && (() => {
+        const lastBot = [...messages].reverse().find((m) => m.role === "assistant");
+        if (!lastBot) return null;
+        const replies = getQuickReplies(lastBot.content);
+        if (!replies) return null;
+        return (
+          <div className="border-t border-[#d9cdbf]/50 bg-white/50 px-4 py-3">
+            <div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-2">
+              {replies.map((reply) => (
+                <button
+                  key={reply}
+                  onClick={() => processInput(reply)}
+                  className="rounded-full border border-[#d9cdbf] bg-white px-5 py-2 text-sm font-light tracking-wide text-[#2c1a12] transition-all duration-200 hover:border-[#d4a574] hover:bg-[#2c1a12] hover:text-[#e9dfd4]"
+                  style={{ fontFamily: "'Jost', sans-serif" }}
+                >
+                  {reply}
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Input Area */}
       <div className="border-t border-[#d9cdbf] bg-white px-4 py-4">
