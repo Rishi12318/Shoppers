@@ -248,7 +248,7 @@ export default function ShopPage() {
                       {product.desc}
                     </p>
                     <a
-                      href="/collections/all"
+                      href={`/tailor?product=${encodeURIComponent(product.title)}`}
                       className="mt-8 inline-block rounded-full border border-white bg-white px-8 py-3 text-sm font-medium tracking-widest text-black uppercase transition-all duration-300 hover:bg-black hover:text-white"
                       style={{ fontFamily: "'Jost', sans-serif" }}
                     >
@@ -326,6 +326,14 @@ export default function ShopPage() {
                     alt={product.title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
+                  <div className="absolute inset-0 bg-[#2c1a12]/0 transition-all duration-300 group-hover:bg-[#2c1a12]/10" />
+                  <a
+                    href={`/tailor?product=${encodeURIComponent(product.title)}`}
+                    className="absolute bottom-3 left-3 right-3 rounded-full border border-white bg-white/90 py-2 text-center text-xs font-medium tracking-widest text-[#2c1a12] uppercase opacity-0 transition-all duration-300 hover:bg-[#2c1a12] hover:text-white group-hover:opacity-100"
+                    style={{ fontFamily: "'Jost', sans-serif" }}
+                  >
+                    Buy Now
+                  </a>
                 </div>
                 <div className="mt-2">
                   <h3
