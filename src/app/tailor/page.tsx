@@ -9,66 +9,14 @@ interface Message {
   content: string;
 }
 
-type Step =
-  | "welcome"
-  | "gender"
-  | "body_type"
-  | "chest"
-  | "waist"
-  | "hips"
-  | "height"
-  | "preference"
-  | "done";
-
-const BODY_TYPES = ["Slim", "Average", "Athletic", "Muscular", "Plus-size", "Petite"];
-
-const TAILORS = [
-  {
-    name: "Tailor 1",
-    specialty: "Traditional Punjabi Embroidery & Phulkari Work",
-    experience: "15 years",
-    price: "₹1,800 - ₹4,500",
-    delivery: "7-10 days",
-    contact: "+91-98765-43210",
-    rating: "4.8",
-  },
-  {
-    name: "Tailor 2",
-    specialty: "Designer Suits, Lehengas & Bridal Wear",
-    experience: "12 years",
-    price: "₹2,500 - ₹6,000",
-    delivery: "10-14 days",
-    contact: "+91-98765-12345",
-    rating: "4.6",
-  },
-  {
-    name: "Tailor 3",
-    specialty: "Custom Stitching & Modern Fusion Wear",
-    experience: "8 years",
-    price: "₹1,200 - ₹3,500",
-    delivery: "5-8 days",
-    contact: "+91-98765-67890",
-    rating: "4.7",
-  },
-];
-
 function TailorChat() {
   const searchParams = useSearchParams();
   const product = searchParams.get("product") || "Punjabi Suit";
 
   const [messages, setMessages] = useState<Message[]>([]);
-  const [step, setStep] = useState<Step>("welcome");
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [profile, setProfile] = useState({
-    gender: "",
-    bodyType: "",
-    chest: "",
-    waist: "",
-    hips: "",
-    height: "",
-    preference: "",
-  });
+  const [initialized, setInitialized] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -82,171 +30,64 @@ function TailorChat() {
 
   useEffect(() => {
     inputRef.current?.focus();
-  }, [step]);
+  }, [loading]);
 
   useEffect(() => {
-    addBotMessage(
-      `Welcome to **The Amritsari's** Tailoring Service! 👋\n\nI see you're interested in our **${product}**. I'd love to help you find the perfect custom tailoring.\n\nTo get started, could you please tell me your **gender**?\n\n(Reply: Male / Female / Other)`
-    );
-    setStep("gender");
-  }, []);
+    if (initialized) return;
+    setInitialized(true);
 
-  const addBotMessage = (content: string) => {
-    setMessages((prev) => [...prev, { role: "assistant", content }]);
-  };
+    const greetUser = async () => {
+      const systemContext = `The customer is interested in: ${product}. This is the start of the conversation.`;
+      const greeting: Message = {
+        role: "assistant",
+        content: `Welcome to **The Amritsari's** Tailoring Service! 👋\n\nI see you're interested in our **${product}**. I'd love to help you find the perfect custom tailoring.\n\nTo get started, could you please tell me your **gender**? (Male / Female / Other)`,
+      };
+      setMessages([greeting]);
+    };
 
-  const addUserMessage = (content: string) => {
-    setMessages((prev) => [...prev, { role: "user", content }]);
-  };
+    greetUser();
+  }, [product, initialized]);
 
-  const processInput = async (userInput: string) => {
-    addUserMessage(userInput);
+  const sendMessage = async () => {
+    if (!input.trim() || loading) return;
+
+    const userMessage: Message = { role: "user", content: input.trim() };
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
     setInput("");
     setLoading(true);
 
-    await new Promise((r) => setTimeout(r, 600 + Math.random() * 800));
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: newMessages }),
+      });
 
-    switch (step) {
-      case "gender": {
-        const normalized = userInput.toLowerCase().trim();
-        if (["male", "m", "man", "boy"].some((w) => normalized.includes(w))) {
-          setProfile((p) => ({ ...p, gender: "Male" }));
-          addBotMessage(
-            `Great! I've noted you as **Male**. 👔\n\nNow, could you describe your **body type**?\n\nReply with one of:\n• Slim\n• Average\n• Athletic\n• Muscular\n• Plus-size\n• Petite`
-          );
-          setStep("body_type");
-        } else if (["female", "f", "woman", "girl"].some((w) => normalized.includes(w))) {
-          setProfile((p) => ({ ...p, gender: "Female" }));
-          addBotMessage(
-            `Wonderful! I've noted you as **Female**. 👗\n\nNow, could you describe your **body type**?\n\nReply with one of:\n• Slim\n• Average\n• Athletic\n• Muscular\n• Plus-size\n• Petite`
-          );
-          setStep("body_type");
-        } else {
-          setProfile((p) => ({ ...p, gender: "Other" }));
-          addBotMessage(
-            `Noted! 🙌\n\nNow, could you describe your **body type**?\n\nReply with one of:\n• Slim\n• Average\n• Athletic\n• Muscular\n• Plus-size\n• Petite`
-          );
-          setStep("body_type");
-        }
-        break;
+      const data = await res.json();
+
+      if (!res.ok) {
+        setMessages([
+          ...newMessages,
+          {
+            role: "assistant",
+            content: data.error || "Sorry, something went wrong. Please try again.",
+          },
+        ]);
+      } else {
+        setMessages([...newMessages, { role: "assistant", content: data.reply }]);
       }
-
-      case "body_type": {
-        const matched = BODY_TYPES.find(
-          (bt) => userInput.toLowerCase().trim().includes(bt.toLowerCase())
-        );
-        if (matched) {
-          setProfile((p) => ({ ...p, bodyType: matched }));
-          addBotMessage(
-            `**${matched}** — got it! ✅\n\nNow let's get your measurements for the perfect fit.\n\nWhat is your **Chest / Bust** measurement? (in inches)\n\n*e.g., 38 inches*`
-          );
-          setStep("chest");
-        } else {
-          addBotMessage(
-            `I didn't quite catch that. Could you pick from these options?\n\n• Slim\n• Average\n• Athletic\n• Muscular\n• Plus-size\n• Petite`
-          );
-        }
-        break;
-      }
-
-      case "chest": {
-        const num = userInput.replace(/[^0-9.]/g, "");
-        if (num && Number(num) > 20 && Number(num) < 60) {
-          setProfile((p) => ({ ...p, chest: `${num} inches` }));
-          addBotMessage(
-            `Chest: **${num} inches** ✅\n\nWhat is your **Waist** measurement? (in inches)\n\n*e.g., 32 inches*`
-          );
-          setStep("waist");
-        } else {
-          addBotMessage(
-            `Please enter a valid chest measurement in inches (e.g., 38).`
-          );
-        }
-        break;
-      }
-
-      case "waist": {
-        const num = userInput.replace(/[^0-9.]/g, "");
-        if (num && Number(num) > 18 && Number(num) < 55) {
-          setProfile((p) => ({ ...p, waist: `${num} inches` }));
-          addBotMessage(
-            `Waist: **${num} inches** ✅\n\nWhat is your **Hip** measurement? (in inches)\n\n*e.g., 40 inches*`
-          );
-          setStep("hips");
-        } else {
-          addBotMessage(`Please enter a valid waist measurement in inches.`);
-        }
-        break;
-      }
-
-      case "hips": {
-        const num = userInput.replace(/[^0-9.]/g, "");
-        if (num && Number(num) > 22 && Number(num) < 65) {
-          setProfile((p) => ({ ...p, hips: `${num} inches` }));
-          addBotMessage(
-            `Hips: **${num} inches** ✅\n\nAlmost done! What is your **Height**?\n\n*e.g., 5'8" or 173 cm*`
-          );
-          setStep("height");
-        } else {
-          addBotMessage(`Please enter a valid hip measurement in inches.`);
-        }
-        break;
-      }
-
-      case "height": {
-        if (userInput.trim().length > 1) {
-          setProfile((p) => ({ ...p, height: userInput.trim() }));
-          addBotMessage(
-            `Height: **${userInput.trim()}** ✅\n\nOne last thing — do you have any **special preferences**?\n\n*e.g., Cotton fabric, red color, heavy embroidery, minimal design, wedding wear, casual wear*\n\nOr type **skip** to continue.`
-          );
-          setStep("preference");
-        } else {
-          addBotMessage(`Please enter your height (e.g., 5'8" or 173 cm).`);
-        }
-        break;
-      }
-
-      case "preference": {
-        const pref = userInput.trim().toLowerCase() === "skip" ? "No special preferences" : userInput.trim();
-        const finalProfile = { ...profile, preference: pref };
-        setProfile(finalProfile);
-        setStep("done");
-
-        addBotMessage(
-          `Thank you, **${finalProfile.gender}**! Here's your profile:\n\n` +
-            `• Body Type: ${finalProfile.bodyType}\n` +
-            `• Chest: ${finalProfile.chest}\n` +
-            `• Waist: ${finalProfile.waist}\n` +
-            `• Hips: ${finalProfile.hips}\n` +
-            `• Height: ${finalProfile.height}\n` +
-            `• Preference: ${pref}\n\n` +
-            `Based on your measurements for the **${product}**, here are our recommended tailors:\n\n` +
-            `---\n\n` +
-            TAILORS.map(
-              (t) =>
-                `**${t.name}**\n` +
-                `Specialty: ${t.specialty}\n` +
-                `Experience: ${t.experience}\n` +
-                `Price Range: ₹${t.price.replace("₹", "")}\n` +
-                `Delivery Time: ${t.delivery}\n` +
-                `Contact: ${t.contact}\n` +
-                `Rating: ⭐ ${t.rating}/5`
-            ).join("\n\n---\n\n") +
-            `\n\n---\n\n💡 *All prices are indicative and may vary based on final measurements and customization. Contact the tailor directly for a precise quote.*`
-        );
-        break;
-      }
-
-      default:
-        break;
+    } catch {
+      setMessages([
+        ...newMessages,
+        {
+          role: "assistant",
+          content: "Network error. Please check your connection and try again.",
+        },
+      ]);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
-  };
-
-  const sendMessage = () => {
-    if (!input.trim() || loading || step === "done") return;
-    processInput(input.trim());
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -372,7 +213,7 @@ function TailorChat() {
                     className="text-xs text-[#7b6a59]"
                     style={{ fontFamily: "'Jost', sans-serif" }}
                   >
-                    Typing...
+                    AI Tailor is thinking...
                   </span>
                 </div>
               </div>
@@ -391,20 +232,15 @@ function TailorChat() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={
-                step === "done"
-                  ? "Consultation complete!"
-                  : "Type your message..."
-              }
+              placeholder="Type your message..."
               rows={1}
-              disabled={step === "done"}
-              className="w-full resize-none bg-transparent text-sm text-[#2c1a12] placeholder:text-[#7b6a59]/50 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              className="w-full resize-none bg-transparent text-sm text-[#2c1a12] placeholder:text-[#7b6a59]/50 focus:outline-none"
               style={{ fontFamily: "'Jost', sans-serif" }}
             />
           </div>
           <button
             onClick={sendMessage}
-            disabled={!input.trim() || loading || step === "done"}
+            disabled={!input.trim() || loading}
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#2c1a12] text-[#e9dfd4] transition-all hover:bg-[#d4a574] hover:text-[#1a0f0a] disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <svg
