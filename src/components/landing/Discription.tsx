@@ -26,6 +26,11 @@ export default function Discription() {
   const [slideIndex, setSlideIndex] = useState(0);
 
   useEffect(() => {
+    const timer = setTimeout(() => setIsOpen(true), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     if (!isOpen) return;
     const id = setInterval(() => {
       setSlideIndex((prev) => (prev + 1) % slides.length);
