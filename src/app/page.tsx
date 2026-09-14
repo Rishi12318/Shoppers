@@ -11,21 +11,13 @@ export default function Home() {
       <HeroSection />
 
       <div className="relative z-10 bg-[#f8f5f1]">
-        <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32">
-          <div className="mx-auto max-w-6xl">
-            <ScrollReveal>
-              <Discription />
-            </ScrollReveal>
-          </div>
-        </section>
+        <ScrollReveal>
+          <Discription />
+        </ScrollReveal>
 
-        <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32">
-          <div className="mx-auto max-w-6xl">
-            <ScrollReveal>
-              <Working />
-            </ScrollReveal>
-          </div>
-        </section>
+        <ScrollReveal>
+          <Working />
+        </ScrollReveal>
 
         <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32">
           <div className="mx-auto max-w-6xl">
