@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAllTailors, addTailor } from "@/lib/db";
 import { TailorSchema } from "@/lib/validators";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
-    const tailors = getAllTailors();
+    const tailors = await getAllTailors();
     return NextResponse.json({ tailors });
   } catch (error) {
     console.error("GET /api/tailors error:", error);
@@ -24,7 +26,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const tailor = addTailor(parsed.data);
+    const tailor = await addTailor(parsed.data);
     return NextResponse.json({ tailor }, { status: 201 });
   } catch (error) {
     console.error("POST /api/tailors error:", error);
